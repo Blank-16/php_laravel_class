@@ -6,30 +6,30 @@ use App\Http\Controllers\StudentController;
 
 
 
-Route::get('/', function() {
+Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/users/{id}', function($id) {
-    return 'User Id is: '.$id;
+Route::get('/users/{id}', function ($id) {
+    return 'User Id is: ' . $id;
 });
 
 Route::get('/cal', [calcController::class, 'index']);
 
-Route::get('/calc/{op}/{num1}/{num2}', function($op, $num1, $num2) {
-    switch($op) {
+Route::get('/calc/{op}/{num1}/{num2}', function ($op, $num1, $num2) {
+    switch ($op) {
         case 'add':
             $result = $num1 + $num2;
-            return 'Addition: '.$result;
+            return 'Addition: ' . $result;
         case 'sub':
             $result = $num1 - $num2;
-            return 'Subtraction: '.$result;
+            return 'Subtraction: ' . $result;
         case 'mul':
             $result = $num1 * $num2;
-            return 'Multiplication: '.$result;
+            return 'Multiplication: ' . $result;
         case 'div':
             $result = $num1 / $num2;
-            return 'Division: '.$result;
+            return 'Division: ' . $result;
         default:
             return 'Invalid op';
     }
@@ -46,3 +46,5 @@ Route::get('/calc/{op}/{num1}/{num2}', function($op, $num1, $num2) {
 
 Route::get('/student/{name}', [StudentController::class, 'showName']);
 Route::get('/course/{course?}', [StudentController::class, 'showCourse']);
+Route::get('/student/profile/{id}', [StudentController::class, 'Id'])->whereNumber('id');
+Route::get('/students', [StudentController::class, 'index']);
