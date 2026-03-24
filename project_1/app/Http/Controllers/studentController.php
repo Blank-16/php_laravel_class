@@ -15,7 +15,7 @@ class StudentController extends Controller
     {
         return view('course', ['course' => $course]);
     }
-    
+
     public function Id($id)
     {
         $students = [
@@ -24,13 +24,24 @@ class StudentController extends Controller
         ];
 
         if (!array_key_exists($id, $students)) {
-            abort(404); 
+            abort(404);
         }
 
         $student = $students[$id];
         return view('student_profile', ['student' => $student, 'id' => $id]);
     }
-    
+
+    public function student_function()
+    {
+        $students = [
+            1 => ['name' => 'Blank', 'course' => 'B.tech'],
+            2 => ['name' => 'Hollow', 'course' => 'MBA'],
+            3 => ['name' => 'Ghost', 'course' => 'M.Tech'],
+        ];
+
+        return view('student_function', ['students' => $students]);
+    }
+
     public function index()
     {
         $students = [
@@ -38,7 +49,7 @@ class StudentController extends Controller
             2 => ['name' => 'Hollow', 'course' => 'MBA'],
             3 => ['name' => 'Ghost', 'course' => 'M.Tech'],
         ];
-        
+
         return view('student_list', ['students' => $students]);
     }
 }

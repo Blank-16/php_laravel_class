@@ -48,3 +48,20 @@ Route::get('/student/{name}', [StudentController::class, 'showName']);
 Route::get('/course/{course?}', [StudentController::class, 'showCourse']);
 Route::get('/student/profile/{id}', [StudentController::class, 'Id'])->whereNumber('id');
 Route::get('/students', [StudentController::class, 'index']);
+
+
+
+Route::get('/login', function () {
+    return redirect()->action([StudentController::class, 'student_function']);
+});
+
+Route::get('/dashboard', function() {
+        return view('dashboard');
+})->name('dash');
+
+Route::get('/login/{email}/{pass}', function ($email, $pass) {
+    if ($email == "admin@example.com" && $pass == "password") {
+        return redirect()->route('dash')->with('email', $email);
+    }
+    return "Invalid credentials";
+});
