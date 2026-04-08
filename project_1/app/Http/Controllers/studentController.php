@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
+    // public function __construct() {
+    //     return $this->middleware('course.action');
+    // }
+
     public function showName($name)
     {
         return view('student', ['name' => $name]);
@@ -31,15 +35,26 @@ class StudentController extends Controller
         return view('student_profile', ['student' => $student, 'id' => $id]);
     }
 
-    public function student_function()
-    {
+    public function student_details() {
         $students = [
             1 => ['name' => 'Blank', 'course' => 'B.tech'],
             2 => ['name' => 'Hollow', 'course' => 'MBA'],
             3 => ['name' => 'Ghost', 'course' => 'M.Tech'],
         ];
+        return view('student_details', ['students' => $students]);
+    }
 
-        return view('student_function', ['students' => $students]);
+    public function profile() {
+        $data = [
+            'name' => 'Auto',
+            'role' => 'admin',
+            'id' => 1
+        ];
+        return $data;
+    }
+
+    public function student($name) {
+        return view('student', ['name' => $name]);
     }
 
     public function index()

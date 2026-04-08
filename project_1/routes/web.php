@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\calcController;
 use App\Http\Controllers\StudentController;
-
+use App\Http\Controllers\bookapicontroller;
 
 
 Route::get('/', function () {
@@ -55,8 +55,8 @@ Route::get('/login', function () {
     return redirect()->action([StudentController::class, 'student_function']);
 });
 
-Route::get('/dashboard', function() {
-        return view('dashboard');
+Route::get('/dashboard', function () {
+    return view('dashboard');
 })->name('dash');
 
 Route::get('/login/{email}/{pass}', function ($email, $pass) {
@@ -65,3 +65,24 @@ Route::get('/login/{email}/{pass}', function ($email, $pass) {
     }
     return "Invalid credentials";
 });
+
+Route::get('/books', [bookapicontroller::class, 'index']);
+Route::get('/books/{id}', [bookapicontroller::class, 'show']);
+
+
+Route::get(
+    '/test',
+    [StudentController::class, 'test']
+)->middleware('checkUser');
+
+
+Route::get('test1', [StudentController::class , 'profile']);
+Route::get('/test3', function () {
+    return view('home');
+});
+
+Route::get('layout', function () {
+    return view('layout');
+});
+
+Route::get('/student-details', [StudentController::class , 'student_details']);
