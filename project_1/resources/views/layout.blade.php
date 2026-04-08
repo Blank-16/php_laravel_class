@@ -11,30 +11,30 @@
     <div class="">
         @yield('header')
         @yield('content')
+        <div class="">
+            @extends('layouts.app') @section('content')
+            <h1>Student List</h1>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Course</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($students as $id => $info)
+                    <tr>
+                        <td>{{ $id }}</td>
+                        <td>{{ $info['name'] }}</td>
+                        <td>{{ $info['course'] }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            @endsection
+        </div>
         @yield('footer')
-    </div>
-    <div class="">
-        @extends('layouts.app') @section('content')
-        <h1>Student List</h1>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Course</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($students as $id => $info)
-                <tr>
-                    <td>{{ $id }}</td>
-                    <td>{{ $info['name'] }}</td>
-                    <td>{{ $info['course'] }}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-        @endsection
     </div>
 
 </body>
