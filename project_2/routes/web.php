@@ -49,11 +49,14 @@ Route::get('/user/{id}/{name}', function ($id, $name) {
 })->where(['id' => '[0-9]+', 'name' => '[a-zA-Z]+']);
 
 Route::controller(StudentController::class)->middleware('auth')->group(function () {
-    Route::get('/student', 'student');
     Route::get('/student/profile/{id}', 'profile', function ($id) {
         return "Student ID: $id";
     })->where('id', '[0-9]+');
     Route::get('/student/details', 'details');
+});
+
+Route::get('/student', function () {
+    return view('student');
 });
 
 
