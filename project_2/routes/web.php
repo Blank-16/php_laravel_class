@@ -3,6 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Http\Controllers\FormController;
+use App\Http\Controllers\FileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -11,7 +14,7 @@ Route::get('/', function () {
 Route::get('/dashboard/url', function () {
     return [
         'current' => url()->current(),
-        'full' => url()->full(),
+        'full' => request()->fullUrl(),
         'path' => request()->path(),
         'current-url' => request()->url(),
     ];
@@ -60,6 +63,28 @@ Route::get('/student', function () {
 });
 
 
+Route::get('/details', function (Request $request) {
+    return response([
+        'all' => $request->all(),
+        'using-input' => $request->input('name'),
+        'course' => $request->course,
+        'except' => $request->except(['age', 'course']),
+        'only' => $request->only(['name', 'age']),
+        'filled' => $request->filled('name') ? 'Filled' : 'Not Filled',
+        'has' => $request->has('name') ? 'Has Name' : 'Does Not Have Name',
+        'isMethod' => $request->isMethod('get') ? 'GET' : 'Not GET',
+        'query' => $request->query('name', 'Default Name'),
+        'header' => $request->header('Authorization'),
+    ]);
+});
+
+
+Route::get('/get-form', [FormController::class, 'showForm']);
+Route::post('/submit-form', [FormController::class, 'submitForm']);
+
+Route::get('/file-upload', [FileController::class, 'uploadForm']);
+Route::post('/upload-file', [FileController::class, 'upload']);
+// we can see the uploaded file in the public folder
 
 
 
