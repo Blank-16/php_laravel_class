@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\FileController;
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     return view('welcome');
@@ -87,6 +89,19 @@ Route::post('/upload-file', [FileController::class, 'upload']);
 // we can see the uploaded file in the public folder
 
 
+Route::get('/email-send', function () {
+    Mail::to('anuragshah987@gmail.com')->send(new TestMail());
+    // Mail::to('ishikaishika1603@gmail.com')->send(new TestMail());
+    return "Email is send Successfully";
+});
 
+Route::get('/session-data', function (Request $request) {
+    return [
+        'put' => $request->session()->put('name', 'Blank'),
+        'put-multiple' => $request->session()->put(['age' => 20, 'course' => 'Laravel', 'fruits' => []]),
+        'session' => session('city', 'Phagwara'),
+        'push' => $request->session()->push('fruits', 'Apple'),
+    ];
+});
 
 require __DIR__ . '/auth.php';
