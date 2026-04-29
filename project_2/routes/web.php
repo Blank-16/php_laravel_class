@@ -54,9 +54,7 @@ Route::get('/user/{id}/{name}', function ($id, $name) {
 })->where(['id' => '[0-9]+', 'name' => '[a-zA-Z]+']);
 
 Route::controller(StudentController::class)->middleware('auth')->group(function () {
-    Route::get('/student/profile/{id}', 'profile', function ($id) {
-        return "Student ID: $id";
-    })->where('id', '[0-9]+');
+    Route::get('/student/profile/{id}', 'profile')->where('id', '[0-9]+');
     Route::get('/student/details', 'details');
 });
 
@@ -103,5 +101,50 @@ Route::get('/session-data', function (Request $request) {
         'push' => $request->session()->push('fruits', 'Apple'),
     ];
 });
+
+Route::get('/set', function (Request $request) {
+    $request->session()->flash('info', 'hello Flash');
+    return redirect('/now-test');
+});
+
+Route::get('/country', function (Request $req) {
+    if ($req->session()->exists('company-name')) {
+        $req->session()->forget('company-name');
+    }
+    if ($req->session()->exists('countries')) {
+        $req->session()->forget('countries');
+    }
+    return [
+        'countries-using-put' =>
+        $req->session()->put(
+            ['countries' => ['A', 'B', 'C']],
+            ['company-name' => ['ab', 'bc', 'ac']],
+        ),
+        'domain-using-session' => session(['domain' => 'Website']),
+        'company-name-using-push' => $req->session()->push('company-name', 'ABC')
+    ];
+});
+
+Route::get('/get-session', function (Request $req) {
+    $data = $req->session()->all();
+    return [
+        'get' => $req->session()->get('company-name'),
+        'domain-using-session' => session('domain'),
+        'default-value' => $req->session()->get('name', 'Blank'),
+        'all' => $data,
+        'has' => $req->session()->has('countries') ? 'True' : 'False',
+        'exists' => $req->session()->exists('section') ? 'True' : 'False'
+    ];
+});
+
+
+Route::get('lang/{lang}', function ($lang) {
+    $available = ['en', 'bn', 'hi'];
+    if (in_array($lang, $available)) {
+        session(['locale' => $lang]);
+        app()->setLocale($lang);
+    }
+    return redirect()->back();
+})->name('lang.switch');
 
 require __DIR__ . '/auth.php';
