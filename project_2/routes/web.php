@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\FormController;
@@ -146,5 +147,17 @@ Route::get('lang/{lang}', function ($lang) {
     }
     return redirect()->back();
 })->name('lang.switch');
+
+Route::get('/lang', function () {
+    return view('lang');
+});
+
+Route::get('/set-lang/{locale}', [LanguageController::class, 'setLanguage'])->name('set-language');
+
+
+
+
+
+
 
 require __DIR__ . '/auth.php';
