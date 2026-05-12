@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\ResourceController;
 use App\Mail\TestMail;
 use Illuminate\Support\Facades\Mail;
 
@@ -154,7 +155,10 @@ Route::get('/lang', function () {
 
 Route::get('/set-lang/{locale}', [LanguageController::class, 'setLanguage'])->name('set-language');
 
+Route::get('show-form', [FormController::class, 'showForm']);
+Route::post('submit-form', [FormController::class, 'submit-form']);
 
+Route::resource('resource', ResourceController::class);
 
 
 
