@@ -7,9 +7,12 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ResourceController;
 use App\Mail\TestMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
+use App\Models\Movie;
 
 Route::get('/', function () {
     return view('welcome');
@@ -158,9 +161,30 @@ Route::get('/set-lang/{locale}', [LanguageController::class, 'setLanguage'])->na
 Route::get('show-form', [FormController::class, 'showForm']);
 Route::post('submit-form', [FormController::class, 'submit-form']);
 
-Route::resource('resource', ResourceController::class);
+// Route::resource('resource', ResourceController::class);
+// Route::get('/read-all', function () {
+//     return DB::table('movies')->get();
+// });
 
+// Route::get('/update-data', function () {
+//     return DB::table('movies')->where('id', 3)->update(['movie_name' => "Time Travel Logs"]);
+// });
 
+// Route::get('/delete-table', function () {
+//     DB::table('movies')->where('id', 3)->delete();
+//     return "Table deleted";
+// });
+
+Route::get('/movies/seed', [MovieController::class, 'create']);
+
+Route::get('/movie/all', function () {
+    return Movie::all();
+});
+
+// for rating > 9
+Route::get('movie/rating-9', function () {
+    return Movie::where('rating', 9)->get();
+});
 
 
 
